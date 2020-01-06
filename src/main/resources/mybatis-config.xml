@@ -1,0 +1,19 @@
+<configuration>
+    <!--配置环境-->
+    <environments default="dev">
+        <!--配置mysql的环境-->
+        <environment id="dev">
+            <!--配置连接池-->
+            <dataSource type="druid">
+                <property name="driver" value="com.mysql.jdbc.Driver"></property>
+                <property name="url" value="jdbc:mysql://172.16.8.187:3307/user_center_dev1.1"></property>
+                <property name="username" value="root"></property>
+                <property name="password" value="khan1128$"></property>
+            </dataSource>
+        </environment>
+    </environments>
+    <!--配置映射文件的位置-->
+    <mappers>
+        <mapper resource="/userMapper.xml"></mapper>
+    </mappers>
+</configuration>
