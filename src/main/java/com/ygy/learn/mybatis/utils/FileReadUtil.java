@@ -26,7 +26,7 @@ public class FileReadUtil {
     public static Properties readProperties(String path) {
         Properties result = new Properties();
         try {
-            result.load(new FileInputStream(new File(path)));
+            result.load(FileReadUtil.class.getResourceAsStream(path));
         } catch (IOException e) {
             log.error(e.getMessage(), e);
             throw new RuntimeException("读取文件异常", e);
@@ -37,7 +37,7 @@ public class FileReadUtil {
     public static Element readXml(String path){
         SAXReader saxReader = new SAXReader();
         try {
-            Document document = saxReader.read(new FileInputStream(new File(path)));
+            Document document = saxReader.read(FileReadUtil.class.getResourceAsStream(path));
             return document.getRootElement();
         } catch (Exception e) {
             log.error(e.getMessage(), e);

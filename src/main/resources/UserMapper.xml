@@ -1,0 +1,16 @@
+<mapper namespace="com.ygy.learn.mybatis.UserMapper">
+
+
+    <!--根据主键查询单个对象-->
+    <select id="getById" resultType="com.ygy.learn.mybatis.entity.UserDO" parameterType="com.ygy.learn.mybatis.entity.UserDO">
+        SELECT
+        *
+		FROM user
+	    where id = #{id}
+		<if test="username!=null and username!=''">
+			and username=#{username}
+		</if>
+    </select>
+
+
+</mapper>

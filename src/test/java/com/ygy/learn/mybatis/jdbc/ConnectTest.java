@@ -4,19 +4,20 @@ import com.alibaba.druid.pool.DruidDataSource;
 import com.ygy.learn.mybatis.connect.ConnectFactory;
 import com.ygy.learn.mybatis.connect.ConnectParam;
 import com.ygy.learn.mybatis.entity.Configuration;
+import com.ygy.learn.mybatis.entity.MappedStatement;
+import com.ygy.learn.mybatis.sql.node.*;
+import com.ygy.learn.mybatis.sql.source.SqlSource;
 import com.ygy.learn.mybatis.utils.FileReadUtil;
-import com.ygy.learn.mybatis.utils.MapToBeanUtil;
-import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.dom4j.Element;
 import org.dom4j.Node;
-import org.junit.jupiter.api.BeforeEach;
+import org.dom4j.Text;
 import org.junit.jupiter.api.Test;
 
-import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,37 +28,15 @@ import java.util.List;
 @Slf4j
 public class ConnectTest {
 
-    private ConnectParam connectParam;
-
-    @BeforeEach
-    void init() throws Exception {
-        String path = getClass().getResource("/db.properties").getPath();
-        connectParam = MapToBeanUtil.convert(FileReadUtil.readProperties(path), ConnectParam.class);
-    }
-
-    @Test
-    void connectTest() throws Exception {
-        Class.forName("com.mysql.jdbc.Driver");
-        Connection connection = ConnectFactory.getConnect(connectParam);
-        String sql = "select * from user where id = ?";
-        PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setString(1, "136a07f8824f4769a3e7593b762d5d48");
-        ResultSet set = statement.executeQuery();
-        while (set.next()) {
-            log.info(set.getString("username"));
-        }
-        statement.close();
-        connection.close();
-
-    }
+  private boolean isDynamic;
 
     @Test
     void test() throws Exception{
         Configuration configuration = loadConfiguration();
         Connection connection = configuration.getConnection();
-        String sql = "select * from user where id = ?";
+        String sql = "select * from user where user_id = ?";
         PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setString(1, "136a07f8824f4769a3e7593b762d5d48");
+        statement.setObject(1, 1);
         ResultSet set = statement.executeQuery();
         while (set.next()) {
             log.info(set.getString("username"));
@@ -74,10 +53,10 @@ public class ConnectTest {
     private Configuration loadConfiguration() {
         Configuration configuration = new Configuration();
         //读取xml配置
-        String path = getClass().getResource("/mybatis-config.xml").getPath();
-        Element element = FileReadUtil.readXml(path);
+        Element element = FileReadUtil.readXml("/mybatis-home.xml");
         Element environments = element.element("environments");
         handleEnvironments(configuration, environments);
+
         Element mappers = element.element("mappers");
         handleMappers(configuration, mappers);
         return configuration;
@@ -142,6 +121,91 @@ public class ConnectTest {
      * @param mappers
      */
     private void handleMappers(Configuration configuration, Element mappers) {
+        List<Element> list = mappers.elements("mapper");
+        int count = list.size();
+        for(int i =0;i<count;i++){
+            String resource =list.get(i).attributeValue("resource");
+            log.info(resource);
+            Element mapperRoot = FileReadUtil.readXml(resource);
+            String namespace = mapperRoot.attributeValue("namespace");
+            log.info(namespace);
+            List<Element> selectElements = mapperRoot.elements("select");
+            for(Element select:selectElements){
+                parseStatementElement(configuration,select,namespace);
+            }
+        }
+    }
+    private void parseStatementElement(Configuration configuration, Element element, String namespace){
+        String id = element.attributeValue("id");
+        if(id==null||id.length()==0){
+            return;
+        }
+        //一个CRUD标签对应一个MapperStatement对象
+        String statementId = namespace+"."+id;
+        String parameterType = element.attributeValue("parameterType");
+        Class<?> parameterTypeClass = resolveType(parameterType);
+
+        String resultType = element.attributeValue("resultType");
+        Class<?> resultTypeClass = resolveType(resultType);
+
+        SqlSource sqlSource = createSqlSource(element);
+
+        MappedStatement mappedStatement = new MappedStatement(id,parameterTypeClass,resultTypeClass,sqlSource);
+        configuration.addMappedStatement(mappedStatement);
+    }
+
+    /**
+     * 解析CRUD标签中的sql脚本信息
+     * @param element
+     * @return
+     */
+    private SqlSource createSqlSource(Element element) {
+        MixedSqlNode mixedSqlNode = parseDynamicTags(element);
+        return null;
+    }
+
+    /**
+     * 解析sqlnode
+     * @param element
+     * @return
+     */
+    private MixedSqlNode parseDynamicTags(Element element) {
+        int count = element.nodeCount();
+        List<SqlNode> list = new ArrayList<>(count);
+        for(int i=0;i<count;i++){
+            Node node = element.node(i);
+            //是纯文本
+            if(node instanceof Text){
+               String sqlText =  node.getText().trim();
+                TextSqlNode textSqlNode = new TextSqlNode(sqlText);
+                if(textSqlNode.isDynamic()){
+                    //设置是否动态为true;
+                    isDynamic = true;
+                }else{
+                    list.add(new StaticTextSqlNode(sqlText));
+                }
+            }else if(node instanceof Element){
+                String nodeName = node.getName();
+                if ("if".equals(nodeName)) {
+                    //封装成ifsqlnode;
+                    Element ifElement = (Element) node;
+                    String test = ifElement.attributeValue("test");
+                    MixedSqlNode ifChildren = parseDynamicTags(ifElement);
+                    list.add(new IfSqlNode(test,ifChildren));
+                }
+                isDynamic = true;
+            }
+        }
+        return new MixedSqlNode(list);
+    }
+
+    private Class<?> resolveType(String resultType) {
+        try {
+            return Class.forName(resultType);
+        } catch (ClassNotFoundException e) {
+            log.error(e.getMessage());
+        }
+        return null;
     }
 
 }

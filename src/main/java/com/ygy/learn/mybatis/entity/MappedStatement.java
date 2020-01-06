@@ -1,5 +1,7 @@
 package com.ygy.learn.mybatis.entity;
 
+import com.ygy.learn.mybatis.sql.source.SqlSource;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -12,6 +14,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@AllArgsConstructor
 public class MappedStatement {
     /**
      * id
@@ -20,15 +23,11 @@ public class MappedStatement {
     /**
      * 返回类型
      */
-    private Class resultType;
+    private Class<?> resultType;
     /**
      * 参数
      */
-    private Class parameterType;
-    /**
-     * 标签值
-     */
-    private String value;
+    private Class<?> parameterType;
     /**
      * jdbc执行类型？
      */
