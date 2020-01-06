@@ -20,5 +20,8 @@ public class ParameterMapping {
     /**
      * 参数类型
      */
-    private Class type;
+    private Class<?> type;
+    public ParameterMapping(String context){
+        name=context;
+    }
 }

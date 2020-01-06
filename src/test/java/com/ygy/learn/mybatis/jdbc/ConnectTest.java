@@ -6,6 +6,8 @@ import com.ygy.learn.mybatis.connect.ConnectParam;
 import com.ygy.learn.mybatis.entity.Configuration;
 import com.ygy.learn.mybatis.entity.MappedStatement;
 import com.ygy.learn.mybatis.sql.node.*;
+import com.ygy.learn.mybatis.sql.source.DynamicSqlSource;
+import com.ygy.learn.mybatis.sql.source.RawSqlSource;
 import com.ygy.learn.mybatis.sql.source.SqlSource;
 import com.ygy.learn.mybatis.utils.FileReadUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -155,13 +157,21 @@ public class ConnectTest {
     }
 
     /**
-     * 解析CRUD标签中的sql脚本信息
+     * 解析CRUD标签中的sql脚本信息,将xmlsql信息封装为对象
+     * SqlSource 都是为了对外提供getBoundSql
+     *
+     * DynamicSqlSource 的SqlNode 解析发生在[每一次]调用getBoundSql时，因为${}需要拼接
+     * RawSqlSource 的SqlNode解析发生在第一次调用getBoundSql时 因为#{}都用？站位，最后传入参数就行；
      * @param element
      * @return
      */
     private SqlSource createSqlSource(Element element) {
-        MixedSqlNode mixedSqlNode = parseDynamicTags(element);
-        return null;
+        MixedSqlNode rootSqlNode = parseDynamicTags(element);
+        if(isDynamic){
+            return new DynamicSqlSource(rootSqlNode);
+        }else{
+            return new RawSqlSource(rootSqlNode);
+        }
     }
 
     /**
