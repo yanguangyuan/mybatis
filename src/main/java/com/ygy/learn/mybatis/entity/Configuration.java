@@ -23,7 +23,7 @@ public class Configuration {
      * 所有配置的mapper.xml的标签信息，key = namespace+id;value = 信息
      */
     @Getter
-    private Map<String,MappedStatement> mappedStatements;
+    private Map<String,MappedStatement> mappedStatements = new HashMap<>(100);
     @Getter
     @Setter
     private DataSource dataSource;
@@ -37,10 +37,10 @@ public class Configuration {
         return dataSource.getConnection();
     }
     public void addMappedStatement(MappedStatement mappedStatement){
-        if(mappedStatements==null){
-            this.mappedStatements = new HashMap<>(100);
-        }
         mappedStatements.put(mappedStatement.getId(),mappedStatement);
+    }
+    public MappedStatement getMappedStatement(String id){
+        return mappedStatements.get(id);
     }
 
 }

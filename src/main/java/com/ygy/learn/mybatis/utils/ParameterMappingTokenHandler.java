@@ -17,8 +17,7 @@ public class ParameterMappingTokenHandler implements TokenHandler {
 	}
 
 	private ParameterMapping buildParameterMapping(String content) {
-		ParameterMapping parameterMapping = new ParameterMapping(content);
-		return parameterMapping;
+		return new ParameterMapping(content);
 	}
 
 	public List<ParameterMapping> getParameterMappings() {

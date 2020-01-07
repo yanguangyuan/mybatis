@@ -3,11 +3,13 @@ package com.ygy.learn.mybatis.sql.node;
 import com.ygy.learn.mybatis.sql.DynamicContext;
 import com.ygy.learn.mybatis.utils.*;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 处理存文本sql,包含${}
  */
 @AllArgsConstructor
+@Slf4j
 public class TextSqlNode implements SqlNode {
     private String sqlText;
 
@@ -54,9 +56,8 @@ public class TextSqlNode implements SqlNode {
                 // context.getBindings().put("value", paramObject);
                 return String.valueOf(paramObject);
             }
-
             // 使用Ognl api去获取相应的值
-            Object value = OgnlUtils.getValue(expression, context.getBindings());
+            Object value = OgnlUtils.getValue(expression, paramObject);
             return value == null ? "" : String.valueOf(value);
         }
 

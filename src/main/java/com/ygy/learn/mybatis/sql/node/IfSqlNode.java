@@ -21,11 +21,12 @@ public class IfSqlNode implements SqlNode {
     private MixedSqlNode sqlNode;
     @Override
     public void apply(DynamicContext dynamicContext) {
-        boolean evalute = OgnlUtils.evaluateBoolean(test,dynamicContext.getBindings().get("_parameter"));
+        boolean testState = OgnlUtils.evaluateBoolean(test,dynamicContext.getBindings().get("_parameter"));
         //如果条件判断通过
-        if(evalute){
-            sqlNode.apply(dynamicContext);
-            dynamicContext.appendSql(dynamicContext.getSql());
+        if(testState){
+            DynamicContext ifDynamicContext = new DynamicContext(dynamicContext.getBindings().get("_parameter"));
+            sqlNode.apply(ifDynamicContext);
+            dynamicContext.appendSql(ifDynamicContext.getSql());
         }
     }
 }
