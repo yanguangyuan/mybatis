@@ -24,9 +24,7 @@ public class IfSqlNode implements SqlNode {
         boolean testState = OgnlUtils.evaluateBoolean(test,dynamicContext.getBindings().get("_parameter"));
         //如果条件判断通过
         if(testState){
-            DynamicContext ifDynamicContext = new DynamicContext(dynamicContext.getBindings().get("_parameter"));
-            sqlNode.apply(ifDynamicContext);
-            dynamicContext.appendSql(ifDynamicContext.getSql());
+            sqlNode.apply(dynamicContext);
         }
     }
 }
