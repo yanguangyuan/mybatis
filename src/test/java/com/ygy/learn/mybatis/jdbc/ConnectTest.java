@@ -1,8 +1,6 @@
 package com.ygy.learn.mybatis.jdbc;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import com.ygy.learn.mybatis.connect.ConnectFactory;
-import com.ygy.learn.mybatis.connect.ConnectParam;
 import com.ygy.learn.mybatis.entity.*;
 import com.ygy.learn.mybatis.sql.node.*;
 import com.ygy.learn.mybatis.sql.source.DynamicSqlSource;
