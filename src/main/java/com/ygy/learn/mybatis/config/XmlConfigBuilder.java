@@ -41,6 +41,7 @@ public class XmlConfigBuilder {
         Element mappers = root.element("mappers");
         handleMappers(mappers);
     }
+
     @SuppressWarnings("unchecked")
     private void handleMappers(Element mappers) {
         List<Element> list = mappers.elements("mapper");
@@ -72,11 +73,7 @@ public class XmlConfigBuilder {
         if ("druid".equals(type)) {
             List<Element> propertyElement = dsElement.elements();
             Properties properties = new Properties();
-            int count = propertyElement.size();
-            for (int i = 0; i < count; i++) {
-                Element node = propertyElement.get(i);
-                properties.put(node.attributeValue("name"), node.attributeValue("value"));
-            }
+            propertyElement.forEach(element -> properties.put(element.attributeValue("name"), element.attributeValue("value")));
             DruidDataSource dataSource = new DruidDataSource();
             dataSource.setDriverClassName(properties.getProperty("driver"));
             dataSource.setUrl(properties.getProperty("url"));
