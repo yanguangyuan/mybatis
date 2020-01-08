@@ -1,4 +1,4 @@
-package com.ygy.learn.mybatis.sql.node;
+package com.ygy.learn.mybatis.node;
 
 import com.ygy.learn.mybatis.sql.DynamicContext;
 import com.ygy.learn.mybatis.utils.*;
@@ -7,10 +7,11 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * 处理存文本sql,包含${}
+ * @author yanguangyuan
  */
 @AllArgsConstructor
 @Slf4j
-public class TextSqlNode implements SqlNode {
+public class TextSqlNode implements ISqlNode {
     private String sqlText;
 
     /**

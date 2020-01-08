@@ -1,8 +1,9 @@
 package com.ygy.learn.mybatis.jdbc;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import com.ygy.learn.mybatis.config.Configuration;
 import com.ygy.learn.mybatis.entity.*;
-import com.ygy.learn.mybatis.sql.node.*;
+import com.ygy.learn.mybatis.node.*;
 import com.ygy.learn.mybatis.sql.source.DynamicSqlSource;
 import com.ygy.learn.mybatis.sql.source.RawSqlSource;
 import com.ygy.learn.mybatis.sql.source.SqlSource;
@@ -217,7 +218,7 @@ public class ConnectTest {
      */
     private MixedSqlNode parseDynamicTags(Element element) {
         int count = element.nodeCount();
-        List<SqlNode> list = new ArrayList<>(count);
+        List<ISqlNode> list = new ArrayList<>(count);
         for (int i = 0; i < count; i++) {
             Node node = element.node(i);
             //是纯文本

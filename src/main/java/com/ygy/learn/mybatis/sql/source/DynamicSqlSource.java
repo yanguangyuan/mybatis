@@ -3,7 +3,7 @@ package com.ygy.learn.mybatis.sql.source;
 import com.ygy.learn.mybatis.entity.BoundSql;
 import com.ygy.learn.mybatis.sql.DynamicContext;
 import com.ygy.learn.mybatis.sql.SqlSourceParser;
-import com.ygy.learn.mybatis.sql.node.SqlNode;
+import com.ygy.learn.mybatis.node.ISqlNode;
 
 /**
  * @author : yanguangyuan
@@ -11,9 +11,9 @@ import com.ygy.learn.mybatis.sql.node.SqlNode;
  * @Description :动态sqlsource封装 含有${}
  */
 public class DynamicSqlSource implements SqlSource{
-    private SqlNode rootSqlNode;
+    private ISqlNode rootSqlNode;
 
-    public DynamicSqlSource(SqlNode rootSqlNode){
+    public DynamicSqlSource(ISqlNode rootSqlNode){
         this.rootSqlNode = rootSqlNode;
     }
 

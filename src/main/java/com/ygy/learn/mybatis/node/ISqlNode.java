@@ -1,4 +1,4 @@
-package com.ygy.learn.mybatis.sql.node;
+package com.ygy.learn.mybatis.node;
 
 import com.ygy.learn.mybatis.sql.DynamicContext;
 
@@ -7,7 +7,7 @@ import com.ygy.learn.mybatis.sql.DynamicContext;
  * @Date : 2020/1/2 15:48
  * @Description :
  */
-public interface SqlNode {
+public interface ISqlNode {
     /**
      * 执行
      * @param dynamicContext 山下文

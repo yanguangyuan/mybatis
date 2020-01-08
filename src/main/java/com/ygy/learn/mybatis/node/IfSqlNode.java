@@ -1,16 +1,15 @@
-package com.ygy.learn.mybatis.sql.node;
+package com.ygy.learn.mybatis.node;
 
 import com.ygy.learn.mybatis.sql.DynamicContext;
 import com.ygy.learn.mybatis.utils.OgnlUtils;
 import lombok.AllArgsConstructor;
 
-import java.util.List;
-
 /**
  * 处理<if></if>
+ * @author yanguangyuan
  */
 @AllArgsConstructor
-public class IfSqlNode implements SqlNode {
+public class IfSqlNode implements ISqlNode {
     /**
      * if的test判断信息
      */

@@ -1,5 +1,6 @@
-package com.ygy.learn.mybatis.entity;
+package com.ygy.learn.mybatis.config;
 
+import com.ygy.learn.mybatis.entity.MappedStatement;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -23,7 +24,7 @@ public class Configuration {
      * 所有配置的mapper.xml的标签信息，key = namespace+id;value = 信息
      */
     @Getter
-    private Map<String,MappedStatement> mappedStatements = new HashMap<>(100);
+    private Map<String, MappedStatement> mappedStatements = new HashMap<>(100);
     @Getter
     @Setter
     private DataSource dataSource;
