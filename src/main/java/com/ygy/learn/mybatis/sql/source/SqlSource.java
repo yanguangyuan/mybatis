@@ -1,6 +1,6 @@
 package com.ygy.learn.mybatis.sql.source;
 
-import com.ygy.learn.mybatis.entity.BoundSql;
+import com.ygy.learn.mybatis.config.BoundSql;
 
 /**
  * @author : yanguangyuan

@@ -1,7 +1,7 @@
 package com.ygy.learn.mybatis.sql.source;
 
-import com.ygy.learn.mybatis.entity.BoundSql;
-import com.ygy.learn.mybatis.entity.ParameterMapping;
+import com.ygy.learn.mybatis.config.BoundSql;
+import com.ygy.learn.mybatis.config.ParameterMapping;
 import lombok.AllArgsConstructor;
 
 import java.util.List;

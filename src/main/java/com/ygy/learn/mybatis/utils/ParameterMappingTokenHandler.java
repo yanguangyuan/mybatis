@@ -1,7 +1,7 @@
 package com.ygy.learn.mybatis.utils;
 
 
-import com.ygy.learn.mybatis.entity.ParameterMapping;
+import com.ygy.learn.mybatis.config.ParameterMapping;
 
 import java.util.ArrayList;
 import java.util.List;

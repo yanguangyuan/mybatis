@@ -46,29 +46,29 @@ public class UserDO {
     /**
      * 上次登陆时间
      */
-    private Date lastLoginTime;
+    private Date last_login_time;
     /**
      * 注册时间
      */
-    private Date registerTime;
+    private Date register_time;
     /**
      * 密码更新时间
      */
-    private Date passwordUpdateTime;
+    private Date password_update_time;
     /**
      * 数据创建时间
      */
-    private Date createTime;
+    private Date create_time;
     /**
      * 数据更新时间
      */
-    private Date updateTime;
+    private Date update_time;
     /**
      * 创建人
      */
-    private String createBy;
+    private String create_by;
     /**
      * 更新人
      */
-    private String updateBy;
+    private String update_by;
 }

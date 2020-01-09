@@ -1,18 +1,9 @@
 package com.ygy.learn.mybatis.config;
 
 
-import com.ygy.learn.mybatis.entity.MappedStatement;
-import com.ygy.learn.mybatis.node.*;
-import com.ygy.learn.mybatis.sql.source.DynamicSqlSource;
-import com.ygy.learn.mybatis.sql.source.RawSqlSource;
 import com.ygy.learn.mybatis.sql.source.SqlSource;
 import lombok.extern.slf4j.Slf4j;
 import org.dom4j.Element;
-import org.dom4j.Node;
-import org.dom4j.Text;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author : yanguangyuan

@@ -1,6 +1,5 @@
 package com.ygy.learn.mybatis.config;
 
-import com.ygy.learn.mybatis.entity.MappedStatement;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

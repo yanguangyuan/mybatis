@@ -1,4 +1,4 @@
-package com.ygy.learn.mybatis.entity;
+package com.ygy.learn.mybatis.config;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

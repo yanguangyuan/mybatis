@@ -4,7 +4,6 @@ import com.alibaba.druid.pool.DruidDataSource;
 import com.ygy.learn.mybatis.exception.MyException;
 import com.ygy.learn.mybatis.io.Resources;
 import com.ygy.learn.mybatis.utils.DocumentUtil;
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.dom4j.Document;
 import org.dom4j.Element;
@@ -20,7 +19,7 @@ import java.util.Properties;
  */
 @Slf4j
 public class XmlConfigBuilder {
-    @Getter
+
     private Configuration configuration;
 
     public XmlConfigBuilder() {
