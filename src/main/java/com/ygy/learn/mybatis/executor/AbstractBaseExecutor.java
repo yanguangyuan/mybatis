@@ -13,7 +13,7 @@ import java.util.Map;
  * @Date : 2020/1/9 09:39
  * @Description : 基础的抽象执行器
  */
-public abstract class AbstractBaseExecutor implements IExecutor {
+public abstract class AbstractBaseExecutor implements Executor {
 
     private Map<String, List<Object>> oneLevelCache = new HashMap<>(100);
 

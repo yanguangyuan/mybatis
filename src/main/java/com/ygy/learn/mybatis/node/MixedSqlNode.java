@@ -9,11 +9,11 @@ import java.util.List;
  * 混合sqlNode
  */
 @AllArgsConstructor
-public class MixedSqlNode implements ISqlNode {
+public class MixedSqlNode implements SqlNode {
     /**
      * 封装接口集合信息，及包含多个或多级节点
      */
-    private List<ISqlNode> sqlNodes;
+    private List<SqlNode> sqlNodes;
 
     @Override
     public void apply(DynamicContext dynamicContext) {

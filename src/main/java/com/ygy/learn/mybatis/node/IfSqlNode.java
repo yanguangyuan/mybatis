@@ -9,7 +9,7 @@ import lombok.AllArgsConstructor;
  * @author yanguangyuan
  */
 @AllArgsConstructor
-public class IfSqlNode implements ISqlNode {
+public class IfSqlNode implements SqlNode {
     /**
      * if的test判断信息
      */

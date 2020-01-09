@@ -7,7 +7,7 @@ import com.ygy.learn.mybatis.sql.DynamicContext;
  * @Date : 2020/1/2 15:48
  * @Description :
  */
-public interface ISqlNode {
+public interface SqlNode {
     /**
      * 执行
      * @param dynamicContext 山下文

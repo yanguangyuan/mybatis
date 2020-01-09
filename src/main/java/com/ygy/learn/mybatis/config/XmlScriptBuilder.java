@@ -1,7 +1,7 @@
 package com.ygy.learn.mybatis.config;
 
 import com.ygy.learn.mybatis.node.*;
-import com.ygy.learn.mybatis.node.handler.INodeHandler;
+import com.ygy.learn.mybatis.node.handler.NodeHandler;
 import com.ygy.learn.mybatis.sql.source.DynamicSqlSource;
 import com.ygy.learn.mybatis.sql.source.RawSqlSource;
 import com.ygy.learn.mybatis.sql.source.SqlSource;
@@ -22,7 +22,7 @@ import java.util.Map;
 public class XmlScriptBuilder {
     private boolean isDynamic = false;
 
-    private Map<String, INodeHandler> nodeHandlerMap = new HashMap<>(5);
+    private Map<String, NodeHandler> nodeHandlerMap = new HashMap<>(5);
 
     public XmlScriptBuilder() {
         this.nodeHandlerMap.put("if", new IfNodeHandler());
@@ -45,7 +45,7 @@ public class XmlScriptBuilder {
      */
     private MixedSqlNode parseDynamicTags(Element element) {
         int count = element.nodeCount();
-        List<ISqlNode> list = new ArrayList<>(count);
+        List<SqlNode> list = new ArrayList<>(count);
         for (int i = 0; i < count; i++) {
             Node node = element.node(i);
             //是纯文本
@@ -63,16 +63,16 @@ public class XmlScriptBuilder {
                     list.add(new StaticTextSqlNode(sqlText));
                 }
             } else if (node instanceof Element) {
-                INodeHandler nodeHandler = nodeHandlerMap.get(node.getName());
+                NodeHandler nodeHandler = nodeHandlerMap.get(node.getName());
                 nodeHandler.handle((Element) node,list);
                 isDynamic = true;
             }
         }
         return new MixedSqlNode(list);
     }
-    private class IfNodeHandler implements INodeHandler {
+    private class IfNodeHandler implements NodeHandler {
         @Override
-        public void handle(Element node, List<ISqlNode> nodes) {
+        public void handle(Element node, List<SqlNode> nodes) {
             //封装成ifsqlnode;
             String test = node.attributeValue("test");
             MixedSqlNode ifChildren = parseDynamicTags(node);

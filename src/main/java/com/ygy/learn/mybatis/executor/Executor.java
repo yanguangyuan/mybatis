@@ -10,7 +10,7 @@ import java.util.List;
  * @Date : 2020/1/9 09:35
  * @Description : sql 执行器 接口，交由他具体执行sql
  */
-public interface IExecutor {
+public interface Executor {
     /**
      * 查询
      *
