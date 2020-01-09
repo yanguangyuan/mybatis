@@ -5,6 +5,9 @@ import ognl.OgnlContext;
 
 import java.math.BigDecimal;
 
+/**
+ * @author yanguangyuan
+ */
 public class OgnlUtils {
 	/**
 	 * 根据Ongl表达式，获取指定对象的参数值

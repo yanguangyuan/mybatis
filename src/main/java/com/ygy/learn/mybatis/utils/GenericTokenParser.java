@@ -16,7 +16,7 @@
 package com.ygy.learn.mybatis.utils;
 
 /**
- * @author Clinton Begin
+ * @author yanguangyuan
  */
 public class GenericTokenParser {
 

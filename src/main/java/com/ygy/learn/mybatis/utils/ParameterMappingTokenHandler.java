@@ -6,6 +6,9 @@ import com.ygy.learn.mybatis.config.ParameterMapping;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author yanguangyuan
+ */
 public class ParameterMappingTokenHandler implements TokenHandler {
 	private List<ParameterMapping> parameterMappings = new ArrayList<>();
 

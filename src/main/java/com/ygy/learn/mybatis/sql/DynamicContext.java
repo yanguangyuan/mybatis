@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 /**
  * sql拼接上下文，通过此对象讲解析出来的sqlNode信息拼接到一起
+ * @author yanguangyuan
  */
 @Getter
 @Setter
